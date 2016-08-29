@@ -2,6 +2,7 @@
 % Enrique C. Toomey, 2013 - 2016
 addpath(genpath(pwd))
 clear all; clc;
+fig_idx = 1; % index for figures 
 %% Inputs
 
 Vinf = 1; % Free stream velocity [m/s]
@@ -61,21 +62,21 @@ end
 aux1 = polyfit(alpha_CL(3:aux2-8,1),alpha_CL(3:aux2-8,2),1);
 a = aux1(1)*180/pi;
 alpha0 = aux1(2)/a;
-    
-%     plot_airfoil_data(CL_CD_Re3(:,1),CL_CD_Re3(:,2),...
-%         CL_CD_Re6(:,1),CL_CD_Re6(:,2),...
-%         CL_CD_Re9(:,1),CL_CD_Re9(:,2),...
-%         CL_CD_SR(:,1),CL_CD_SR(:,2))
-%     title('Curva de Cd vs. Cl')
-%     xlabel('Cl')
-%     ylabel('Cd')
-%     plot_airfoil_data(alpha_CL_Re3(:,1),alpha_CL_Re3(:,2),...
-%         alpha_CL_Re6(:,1),alpha_CL_Re6(:,2),...
-%         alpha_CL_Re9(:,1),alpha_CL_Re9(:,2),...
-%         alpha_CL_SR(:,1),alpha_CL_SR(:,2))
-%     title('Curva de alpha vs. Cl')
-%     xlabel('alpha')
-%     ylabel('Cl')
+
+plot_airfoil_data(CL_CD_Re3(:,1),CL_CD_Re3(:,2),...
+    CL_CD_Re6(:,1),CL_CD_Re6(:,2),...
+    CL_CD_Re9(:,1),CL_CD_Re9(:,2),...
+    CL_CD_SR(:,1),CL_CD_SR(:,2))
+title('Curva de Cd vs. Cl')
+xlabel('Cl')
+ylabel('Cd')
+plot_airfoil_data(alpha_CL_Re3(:,1),alpha_CL_Re3(:,2),...
+    alpha_CL_Re6(:,1),alpha_CL_Re6(:,2),...
+    alpha_CL_Re9(:,1),alpha_CL_Re9(:,2),...
+    alpha_CL_SR(:,1),alpha_CL_SR(:,2))
+title('Curva de alpha vs. Cl')
+xlabel('alpha')
+ylabel('Cl')
 
 %% Twist
     twist075 = -3*pi/180; %[radian]
@@ -113,7 +114,7 @@ incidence = (-10:1:25) * pi / 180;
 L = zeros(size(incidence));
 Cl3D = zeros(size(incidence));
 gamma = zeros(n,1);
-figure(1)
+figure;
 for i=1:length(incidence)
     switch solution
         case 'iterative'
@@ -128,7 +129,7 @@ for i=1:length(incidence)
     disp('press any key or click to continue')
     waitforbuttonpress;
 end
-figure(2)
+figure;
 plot(incidence*180/pi,Cl3D); grid on;
 xlabel('incidencia [deg]'); ylabel('Cl [-]'); title('Cl 3D vs alpha')
     % Me falta calcular alpha_i en iterative y glauert
