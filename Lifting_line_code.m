@@ -22,7 +22,7 @@ Sw =10; % Wing Surface [m^2]
 %                                  - (2)cosine distribution (for Glauert)
 n = 20; % Number of partitions
 case1 = 'cosine';%'homogeneourly'; %
-solution = 'iterative';%'glauert';%
+solution = 'glauert';%'glauert';%
 profile_name = 'NACA_63015';%'NACA_0012';
 type_twist = 'lineal';%'hiperbolic';%'none';%
 chord_law = 'tappered';%'eliptical';%
@@ -118,13 +118,14 @@ figure;
 for i=1:length(incidence)
     switch solution
         case 'iterative'
-            [gamma] = iterative(incidence(i),cr,Vinf,eta,b,n,twist,alpha_CL,CL_CD,c,y);
+            [gamma, induce_angle] = iterative(incidence(i),cr,Vinf,eta,b,n,twist,alpha_CL,CL_CD,c,y);
         case 'glauert'
-            [gamma] = glauert(b,a,c,incidence(i),twist,alpha0,Vinf,n,eta);
+            [gamma, induce_angle] = glauert(b,a,c,incidence(i),twist,alpha0,Vinf,n,eta);
     end
     plot(eta,gamma,'-*r'); grid on; axis([-b/2,b/2,-0.5,0.8]);
     xlabel('Envergadura [m]'); ylabel('Circulación [m^3/s]'); title('Distribución de circulación')
-    L(i)  = trapz([-b/2;eta;b/2],[0;gamma;0])*density*Vinf; %[N]
+    L(i) = trapz([-b/2;eta;b/2],[0;gamma;0])*density*Vinf; %[N]
+    D(i) = trapz([-b/2;eta;b/2],[0;gamma.*induce_angle;0])*density*Vinf; %[N]
     Cl3D(i) = 2 * L(i) / ( density * Vinf^2 * Sw);
     disp('press any key or click to continue')
     waitforbuttonpress;
