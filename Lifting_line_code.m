@@ -112,7 +112,9 @@ end
 % using Glauert's Method ('glauert')
 incidence = (-10:1:25) * pi / 180;
 L = zeros(size(incidence));
+Di = zeros(size(incidence));
 Cl3D = zeros(size(incidence));
+Cdi = zeros(size(incidence));
 gamma = zeros(n,1);
 figure;
 for i=1:length(incidence)
@@ -125,13 +127,17 @@ for i=1:length(incidence)
     plot(eta,gamma,'-*r'); grid on; axis([-b/2,b/2,-0.5,0.8]);
     xlabel('Envergadura [m]'); ylabel('Circulación [m^3/s]'); title('Distribución de circulación')
     L(i) = trapz([-b/2;eta;b/2],[0;gamma;0])*density*Vinf; %[N]
-    D(i) = trapz([-b/2;eta;b/2],[0;gamma.*induce_angle;0])*density*Vinf; %[N]
+    Di(i) = trapz([-b/2;eta;b/2],[0;gamma;0].*[incidence(i)-alpha0; induce_angle; incidence(i)-alpha0])*density*Vinf; %[N]
     Cl3D(i) = 2 * L(i) / ( density * Vinf^2 * Sw);
+    Cdi(i) = 2 * Di(i) / ( density * Vinf^2 * Sw);
     disp('press any key or click to continue')
     waitforbuttonpress;
 end
 figure;
 plot(incidence*180/pi,Cl3D); grid on;
 xlabel('incidencia [deg]'); ylabel('Cl [-]'); title('Cl 3D vs alpha')
+figure;
+plot(incidence*180/pi,Cdi); grid on;
+xlabel('incidencia [deg]'); ylabel('Cd_i [-]'); title('Cd_i vs alpha')
     % Me falta calcular alpha_i en iterative y glauert
     %Di = trapz([-b/2;eta;b/2],[0;gamma.*alpha_i;0])*density*Vinf; %[N]
