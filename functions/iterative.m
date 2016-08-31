@@ -1,4 +1,4 @@
-function [GAMMA]=iterative(incidence,cr,Vinf,eta,b,n,twist,alpha_CL,CL_CD,c,y)
+function [GAMMA, induce_angle]=iterative(incidence,cr,Vinf,eta,b,n,twist,alpha_CL,CL_CD,c,y)
 %% Initial solution
 gamma0 = incidence*pi*cr*Vinf;
 gamma = sqrt(1-(2*eta/b).^2)*gamma0;
@@ -28,7 +28,7 @@ gamma_new = 0.5*Vinf*c.*cl;
 
 % Test convergence
 error = norm(gamma-gamma_new,2);
-disp(error)
+% disp(error)
 if error < criteria
     convergence = 1;
 end
@@ -37,3 +37,4 @@ gamma = gamma+0.05*(gamma_new-gamma);
 it = it+1;
 end
 GAMMA = gamma;
+induce_angle = -alpha_i;

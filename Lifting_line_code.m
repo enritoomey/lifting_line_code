@@ -1,7 +1,7 @@
 %% Lifting-line method
 % Enrique C. Toomey, 2013 - 2016
 addpath(genpath(pwd))
-clear all; clc;
+clear all; clc; close all;
 fig_idx = 1; % index for figures 
 %% Inputs
 
@@ -22,7 +22,7 @@ Sw =10; % Wing Surface [m^2]
 %                                  - (2)cosine distribution (for Glauert)
 n = 20; % Number of partitions
 case1 = 'cosine';%'homogeneourly'; %
-solution = 'glauert';%'glauert';%
+solution = 'iterative';%'glauert';%
 profile_name = 'NACA_63015';%'NACA_0012';
 type_twist = 'lineal';%'hiperbolic';%'none';%
 chord_law = 'tappered';%'eliptical';%
