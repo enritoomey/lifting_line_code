@@ -1,7 +1,7 @@
 %% Lifting-line method
 % Enrique C. Toomey, 2013 - 2016
 addpath(genpath(pwd))
-clear all; clc; close all;
+close all; clear all; clc;
 fig_idx = 1; % index for figures 
 %% Inputs
 
@@ -120,7 +120,7 @@ figure;
 for i=1:length(incidence)
     switch solution
         case 'iterative'
-            [gamma, induce_angle] = iterative(incidence(i),cr,Vinf,eta,b,n,twist,alpha_CL,CL_CD,c,y);
+            [gamma, induce_angle] = iterative(b, c, incidence(i), twist, Vinf, n, y, eta, alpha_CL, CL_CD);
         case 'glauert'
             [gamma, induce_angle] = glauert(b,a,c,incidence(i),twist,alpha0,Vinf,n,eta);
     end
@@ -130,7 +130,9 @@ for i=1:length(incidence)
     Di(i) = trapz([-b/2;eta;b/2],[0;gamma;0].*[incidence(i)-alpha0; induce_angle; incidence(i)-alpha0])*density*Vinf; %[N]
     Cl3D(i) = 2 * L(i) / ( density * Vinf^2 * Sw);
     Cdi(i) = 2 * Di(i) / ( density * Vinf^2 * Sw);
-    disp('press any key or click to continue')
+    disp('Angle of attack: ')
+    disp(incidence(i)*180/pi)
+    
     waitforbuttonpress;
 end
 figure;

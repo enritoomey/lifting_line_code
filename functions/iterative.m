@@ -1,6 +1,20 @@
-function [GAMMA, induce_angle]=iterative(incidence,cr,Vinf,eta,b,n,twist,alpha_CL,CL_CD,c,y)
+function [GAMMA, induce_angle]=iterative(b, c, incidence, twist, Vinf, n, y, eta, alpha_CL, CL_CD)
+% Input:
+% b         = Wing span..................................(1x1 array)
+% c         = chord distribution.........................(nx1 array)
+% incidence = wind's angle of attack.....................(1x1 array)
+% twist     = distibution of twist angle.................(nx1 array)
+% Vinf      = wind speed.................................(1x1 array)
+% n         = number of divisions along span.............(1x1 array)
+% eta       = points along the wing span being evaluated.(nx1 array)
+% alpha_CL  = airfoil alpha vs Cl curve..................(mx2 array, where m >= 2)
+% Cl_CD     = airfoil Cl vs Cd curve.....................(mx2 array, where m >= 2)
+%
+% Output:
+% gamma        = vortive intensity distribution.(nx1 array)
+% induce_angle = induced angle distribution.....(nx1 array)
 %% Initial solution
-gamma0 = incidence*pi*cr*Vinf;
+gamma0 = incidence*pi*c(floor(n/2))*Vinf;
 gamma = sqrt(1-(2*eta/b).^2)*gamma0;
 
 %% Calculation of \alpha_i
