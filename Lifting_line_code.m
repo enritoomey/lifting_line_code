@@ -2,9 +2,8 @@
 % Enrique C. Toomey, 2013 - 2016
 addpath(genpath(pwd))
 close all; clear all; clc;
-fig_idx = 1; % index for figures 
-%% Inputs
 
+%% Inputs
 Vinf = 1; % Free stream velocity [m/s]
 Altitude = 0; %[m]
 [temperatureISA,pressure,density,viscosity,sound] = atmosfera_estandar(Altitude);
@@ -20,7 +19,7 @@ Sw =10; % Wing Surface [m^2]
 %% Discretization
 % Two way of dicretizing the span: - (1)homogeneously
 %                                  - (2)cosine distribution (for Glauert)
-n = 20; % Number of partitions
+n = 10; % Number of partitions
 case1 = 'cosine';%'homogeneourly'; %
 solution = 'iterative';%'glauert';%
 profile_name = 'NACA_63015';%'NACA_0012';
